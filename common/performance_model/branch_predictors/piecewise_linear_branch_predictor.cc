@@ -80,15 +80,7 @@ void PiecewiseLinearBranchPredictor::update(bool predicted, bool actual, IntPtr 
    
    /*Updating weight 3D vector*/
    UInt32 addr=ip%n;
-   /*SInt32 out=W[addr][0][0];
 
-   for(UInt32 i=0 ; i<h; i++){
-	   if(ghr[i]){
-		   out += W[addr][GA[i]][i];
-	   }else{
-		   out -= W[addr][GA[i]][i];
-	   }
-   }*/
 
    if(abs(output)<theta || predicted != actual){
 	   if (actual){

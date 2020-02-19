@@ -19,7 +19,7 @@ bool PerceptronBranchPredictor::predict(IntPtr ip, IntPtr target)
 {
    UInt32 index = ip % table_size;
    sum =0;
-      for(unsigned int i=1; i<=history_length ; i++){
+      for(UInt32 i=1; i<=history_length ; i++){
 	      sum +=  p_table[index][i]*ghr[i-1];
       }
 
@@ -33,7 +33,7 @@ void PerceptronBranchPredictor::update(bool predicted, bool actual, IntPtr ip, I
    UInt32 index = ip % table_size;
    
    if((abs(sum)<= theta) || (predicted!=actual)){
-	      for(unsigned int j=1; j<= history_length; j++){
+	      for(UInt32 j=1; j<= history_length; j++){
 		 if(actual){
 	      		p_table[index][j] += (1)*ghr[j-1];
 		 }else {
@@ -48,8 +48,8 @@ void PerceptronBranchPredictor::update(bool predicted, bool actual, IntPtr ip, I
 
       }
 
-
-   for(unsigned int i=(history_length -1);i>0;i--){
+  /*Shift global histroy register*/
+   for(UInt32 i=(history_length -1);i>0;i--){
 		   ghr[i]=ghr[i-1];
 		   
 	   }

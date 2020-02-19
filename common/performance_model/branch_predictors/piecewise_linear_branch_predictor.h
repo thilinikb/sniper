@@ -4,8 +4,7 @@
 #include "branch_predictor.h"
 #include "simulator.h"
 #include <vector>
-#include<iostream>
-using namespace std;
+
 class PiecewiseLinearBranchPredictor : public BranchPredictor
 {
 public:
@@ -19,7 +18,7 @@ private:
    std::vector<bool> ghr;
    std::vector<UInt8> GA;  // needs at most log2n+1 bits
    std::vector<std::vector<std::vector<SInt8>>> W;
-   std::vector<std::vector<SInt16>> SR;
+   std::vector<std::vector<SInt16>> SR; // Ideally this should be 10/12 bits
    std::vector<std::vector<SInt16>> R;
    
    double theta;
