@@ -1,7 +1,10 @@
 #include "simulator.h"
 #include "branch_predictor.h"
 #include "one_bit_branch_predictor.h"
+#include "2bc_gskew_branch_predictor.h"
+#include "perceptron_branch_predictor.h"
 #include "pentium_m_branch_predictor.h"
+#include "piecewise_linear_branch_predictor.h"
 #include "config.hpp"
 #include "stats.h"
 
@@ -42,7 +45,27 @@ BranchPredictor* BranchPredictor::create(core_id_t core_id)
       {
          UInt32 size = cfg->getIntArray("perf_model/branch_predictor/size", core_id);
          return new OneBitBranchPredictor("branch_predictor", core_id, size);
+      } 
+      else if (type == "2bc_gskew")
+      {
+         UInt32 size = cfg->getIntArray("perf_model/branch_predictor/size", core_id);
+         return new bcGskewBranchPredictor("branch_predictor", core_id, size);
       }
+
+       else if (type == "perceptron")
+      {
+         UInt32 sizeH = cfg->getIntArray("perf_model/branch_predictor/sizeH", core_id);
+	 UInt32 sizeT = cfg->getIntArray("perf_model/branch_predictor/sizeT", core_id);
+	 return new PerceptronBranchPredictor("branch_predictor", core_id, sizeH,sizeT);
+      }
+       else if (type == "piecewise_linear")
+      {
+         UInt32 IN_n = cfg->getIntArray("perf_model/branch_predictor/n", core_id);
+	 UInt32 IN_m = cfg->getIntArray("perf_model/branch_predictor/m", core_id);
+	 UInt32 IN_h = cfg->getIntArray("perf_model/branch_predictor/h", core_id);
+	 return new PiecewiseLinearBranchPredictor("branch_predictor", core_id,IN_n,IN_h,IN_m);
+      }
+
       else if (type == "pentium_m")
       {
          return new PentiumMBranchPredictor("branch_predictor", core_id);
